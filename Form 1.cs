@@ -1,4 +1,3 @@
-Form 1.cs
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,7 +37,7 @@ namespace Snake
             plansza.rysowanie(paper);
             snake.drawSnake(paper);
 
-            for (int i = 0; i < snake.SnakeRec.Length; i++)
+            for (int i = 0; i < snake.SnakeRec.Length; i++)// sprawdzanie interakcji snake
             {
                 if (snake.SnakeRec[i].IntersectsWith(plansza.pRec))
                 {
@@ -48,12 +47,22 @@ namespace Snake
 
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)// ustawienia klawiszowe
         {
-            if (e.KeyData == Keys.Space)
+            if (e.KeyData == Keys.P)
             {
                 timer1.Enabled = true;
-                SpaceBar.Text = " ";
+                SpaceBar.Text = "Nacisnij strzałke zeby wznowić";
+                down = false;
+                up = false;
+                right = false;
+                down = false;
+            }
+
+            if (e.KeyData == Keys.Right )
+            {
+                timer1.Enabled = true;
+                SpaceBar.Text = "P- zatrzymuje gre ";
                 down = false;
                 up = false;
                 right = true;
@@ -91,14 +100,14 @@ namespace Snake
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            snakeScore.Text = Convert.ToString(score);
+            snakeScore.Text= Convert.ToString(score);// zapis pkt na dole planszy
             if (down) { snake.moveDown(); }
             if (up) { snake.moveUp(); }
             if (right) { snake.moveRight(); }
             if (left) { snake.moveLeft(); }
             for (int i = 0; i < snake.SnakeRec.Length; i++)
             {
-                if (snake.SnakeRec[i].IntersectsWith(plansza.pRec))
+                if (snake.SnakeRec[i].IntersectsWith(plansza.pRec))//punkty
                 {
                     score += 1;
                     snake.growSnake();
@@ -109,38 +118,46 @@ namespace Snake
 
             this.Invalidate();
         }
-        public void collision()
+        public void collision()//warunki śmierci+restart
         {
             for (int i = 2; i < snake.SnakeRec.Length; i++)
             {
                if (snake.SnakeRec[0].IntersectsWith(snake.SnakeRec[i]))
                 {
-                    restart();
+                    timer1.Enabled = false;
+                    MessageBox.Show("Snake Kanibal");
+                    snakeScore.Text = "0";
+                    score = 0;
+                    SpaceBar.Text = "Nacisnij prawą strzałke";
+                    snake = new Snake();
+            
                 }
             }
             if(snake.SnakeRec[0].X < 0 || snake.SnakeRec[0].X > 335)
             {
-                restart();
+                timer1.Enabled = false;
+                MessageBox.Show("Snake wziął i umarł");
+                snakeScore.Text = "0";
+                score = 0;
+                SpaceBar.Text = "Nacisnij prawą strzałke";
+                snake = new Snake();
+                down = false;
+                up = false;
+                right = true;
+                left = false;
             }
             if (snake.SnakeRec[0].Y < 0 || snake.SnakeRec[0].Y > 385)
             {
-                restart();
+                timer1.Enabled = false;
+                MessageBox.Show("Snake wziął i umarł");
+                snakeScore.Text = "0";
+                score = 0;
+                SpaceBar.Text = "Nacisnij prawą strzałke";
+                snake = new Snake();
+            
             }
 
         }
-
-        public void restart()
-        {
-            timer1.Enabled = false;
-            MessageBox.Show("Snake wziął i umarł");
-            snakeScore.Text = "0";
-            score = 0;
-            SpaceBar.Text = "Nacisnij spacje";
-            snake = new Snake();
-            
-        }
-
-
         private void label1_Click(object sender, EventArgs e)
         {
 
