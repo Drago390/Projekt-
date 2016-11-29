@@ -11,9 +11,10 @@ namespace Snake
         private int x, y, width, height;
         private SolidBrush brush;
         public Rectangle pRec;
-
+        //Resp elementu do zbierania
         public Plansza(Random randPlansza)
         {
+            
             x = randPlansza.Next(0, 20) * 10;
             y = randPlansza.Next(0, 29) * 10;
 
