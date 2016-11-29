@@ -22,25 +22,27 @@ namespace Snake
             //Rozmiar grafiki węża
             snakeRec = new Rectangle[2];
             brush = new SolidBrush(Color.Blue);
-            x = 20;//dlugość węza
+            x = 20;//odleglosc od lewej scianki
             y = 30; //odleglosc od gornej scianki
-            width = 10;//ilosc zamalowanych pól
+            width = 10;//rozmiar węza
             height = 10;
             //Tworzenie węża
             for (int i = 0; i < snakeRec.Length; i++)
             {
                 snakeRec[i] = new Rectangle(x, y, width, height);
-                x -= 5;//ile kwadratów zamalować
+                x -= 10;//zmiejszanie odleglosci od lewej sciany(żeby nie rysowało sie w jednym miejscu)
             }
         }
-        public void drawSnake(Graphics paper)
+        public void drawSnake(Graphics paper)//wprowadzenie go na papier 
         {
             foreach (Rectangle rec in snakeRec)
             {
-                paper.FillRectangle(brush, rec);
+                paper.FillRectangle(brush, rec);//wstawianie pokoleji prostokontów
             }
 
         }
+
+        //Ruch snake
         public void drawSnake()
         {
             for (int i = snakeRec.Length - 1; i > 0; i--)
@@ -75,6 +77,6 @@ namespace Snake
             rec.Add(new Rectangle(snakeRec[snakeRec.Length - 1].X, snakeRec[snakeRec.Length - 1].Y, width, height));
             snakeRec = rec.ToArray();
         }
-
+        
     }
 }
